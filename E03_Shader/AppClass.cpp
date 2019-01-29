@@ -105,6 +105,7 @@ void AppClass::InitVariables(void)
 }
 void AppClass::ProcessKeyboard(sf::Event a_event)
 {
+	bool invert = false;
 	if (a_event.key.code == sf::Keyboard::Key::Escape)//Event says I pressed the Escape key
 		m_bRunning = false;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) //I am currently pressing the Num1 (not the same as above)
@@ -113,6 +114,9 @@ void AppClass::ProcessKeyboard(sf::Event a_event)
 		m_v3Color = glm::vec3(0.0f, 1.0f, 0.0f);
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
 		m_v3Color = glm::vec3(0.0f, 0.0f, 1.0f);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
+		//m_v3Color = (glm::vec3(1.0f, 1.0f, 1.0f) - m_v3Color);
+		invert = !invert;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
 		m_v3Color = glm::vec3(-1.0f, -1.0f, -1.0f);
 }
@@ -124,7 +128,7 @@ void AppClass::Display(void)
 	//read uniforms and send values
 	GLuint SolidColor = glGetUniformLocation(m_uShaderProgramID, "SolidColor");
 	glUniform3f(SolidColor, m_v3Color.r, m_v3Color.g, m_v3Color.b);
-
+	//glUniform4f(SolidColor, m_v3Color.r, m_v3Color.g, m_v3Color.b, -(1.0f, 1.0f, 1.0f));
 	//draw content
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
